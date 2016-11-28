@@ -1,0 +1,125 @@
+%\documentclass[tikz]{standalone}
+%\usepackage{pgfmath}
+%\usepackage{csvsimple}
+%\usetikzlibrary{calc,arrows.meta}
+%
+%\begin{document}
+\newlength{\intervalwidth}
+\newlength{\controldistance}
+\newlength{\yscale}
+\setlength\intervalwidth{1cm}
+\setlength\controldistance{.3cm}
+\setlength\yscale{.4cm}
+\def\tikzscale{0.80}
+\pgfmathsetmacro\invtikzscale{1/\tikzscale}
+
+% A simple empty decoration, that is used to ignore the last bit of the path
+\pgfdeclaredecoration{ignore}{final}
+{
+\state{final}{}
+}
+
+% Declare the actual decoration.
+\pgfdeclaremetadecoration{begin}{initial}{
+    \state{initial}[
+        width={\the\pgfdecorationsegmentlength},
+        next state=final
+    ]
+    {\decoration{curveto}}
+
+    \state{final}
+    {\decoration{ignore}}
+}
+
+% Create a key for easy access to the decoration (as suggested by Jake).
+\tikzset{begin segment/.style={decoration={begin},decorate, segment length=#1}}
+
+{\normalsize
+\begin{center}
+\resizebox{0.8\textwidth}{!}{%
+\begin{tikzpicture}
+  \foreach\k in {0} {
+  \pgfmathtruncatemacro\knext{\k+1}
+  \useasboundingbox (-1em,1.25\yscale) rectangle (4.0\intervalwidth,8.5\yscale);
+  \begin{scope}
+  \clip (-1em,1.25\yscale) rectangle (3.5\intervalwidth,8.5\yscale);
+  %\draw[xstep=\intervalwidth,ystep=\yscale] (0,0) grid (4\intervalwidth,8\yscale);
+
+  \ifthenelse{\k = 0}{%
+    \tikzset{rho/.style={shape=circle,inner sep=1pt,draw=KULeuvenBlauw,fill=KULeuvenBlauw}}
+    \tikzset{rhobar/.style={shape=circle,inner sep=1pt,draw=KULeuvenBlauw,fill=white}}
+    \tikzset{phi/.style={shape=circle,inner sep=1pt,draw=KULeuvenSecundair}}
+    \tikzset{mu/.style={shape=circle,inner sep=1pt,draw=KULeuvenFaculteit,fill=white}}
+    \tikzset{rholine/.style={KULeuvenBlauw,dashed,line width=1pt}}
+    \tikzset{philine/.style={KULeuvenSecundair,line width=1pt}}
+    \tikzset{muline/.style={KULeuvenFaculteit,line width=1pt}}
+    \tikzset{jumpline/.style={black,|->,line width=1pt}}
+  }{%
+    \tikzset{rho/.style={shape=coordinate,inner sep=0pt,draw=KULeuvenBlauw,fill=KULeuvenBlauw}}
+    \tikzset{rhobar/.style={shape=coordinate,inner sep=0pt,draw=KULeuvenBlauw,fill=white}}
+    \tikzset{phi/.style={shape=coordinate,inner sep=0pt,draw=KULeuvenSecundair}}
+    \tikzset{mu/.style={shape=coordinate,inner sep=0pt,draw=KULeuvenFaculteit,fill=white}}
+    \tikzset{rholine/.style={begin segment=0.85\intervalwidth,KULeuvenBlauw,dashed,line width=0pt}}
+    \tikzset{philine/.style={begin segment=0.75\intervalwidth,KULeuvenSecundair,line width=1pt}}
+    \tikzset{muline/.style={begin segment=0.75\intervalwidth,KULeuvenFaculteit,line width=1pt}}
+    \tikzset{jumpline/.style={black,|->,line width=1pt}}
+  }
+
+  \csvreader[head to column names]{specific/input.csv}
+  {rho\k=\nrho,rho\k out=\nrhoout,phi\k=\nphi,phi\k in=\nphiin,%
+  mu\k =\nmu,mu\k out=\nmuout,mu\k in=\nmuin,rho\knext=\nprho,rho\knext out=\nprhoout,rho\knext bar=\nprhobar,rho\knext barin=\nprhobarin}%
+  {%
+\pgfmathtruncatemacro\nnext{\thecsvrow}
+\pgfmathtruncatemacro\n{\nnext-1}
+\pgfmathtruncatemacro\nprev{\n-1}
+\coordinate (rho\n) at (\n\intervalwidth, \nrho\yscale);
+\coordinate (out rho\n) at (\n\intervalwidth + \controldistance, \nrho\yscale + \nrhoout\yscale);
+
+\coordinate (phi\n) at (\n\intervalwidth, \nphi\yscale);
+\coordinate (in  phi\n) at (\n\intervalwidth - \controldistance, \nphi\yscale - \nphiin\yscale);
+
+\coordinate (mu\n) at (\n\intervalwidth, \nmu\yscale);
+\coordinate (out mu\n) at (\n\intervalwidth + \controldistance, \nrho\yscale + \nmuout\yscale);
+\coordinate (in  mu\n) at (\n\intervalwidth - \controldistance, \nmu\yscale  - \nmuin\yscale);
+
+\coordinate (prho\n) at (\n\intervalwidth, \nprho\yscale);
+\coordinate (out prho\n) at (\n\intervalwidth + \controldistance, \nprho\yscale + \nprhoout\yscale);
+\coordinate (prhobar\n) at (\n\intervalwidth, \nprhobar\yscale);
+\coordinate (in  prhobar\n) at (\n\intervalwidth - \controldistance, \nprhobar\yscale - \nprhobarin\yscale);
+
+\ifthenelse{\n = 0}{}{%
+  \draw [muline]  (rho\nprev) .. controls (out mu\nprev)  and (in mu\n)  .. (mu\n);
+  \ifthenelse{\n > \k}{
+    \draw [philine] (rho\nprev) .. controls (out rho\nprev) and (in phi\n) .. (phi\n);
+    \draw [rholine]  (prho\nprev) .. controls (out prho\nprev)  and (in prhobar\n)  .. (prhobar\n);
+  }{}
+}
+\node [rho] at (rho\n) {};
+\node [phi] at (phi\n) {};
+\node [mu]  at (mu\n)  {};
+\node [rhobar] at (prhobar\n) {};
+\node [rho] at (prho\n) {};
+\ifthenelse{\k = 0}{
+  \ifthenelse{\n > \k}{
+    \draw [jumpline] (phi\n) -- (mu\n);
+  rlet{orange}{KULeuvenLichtblauw}
+    \draw [jumpline] (prhobar\n) -- (prho\n);
+  }{}
+}{} % end of conditional on k=0
+  } % end of CSV reader
+  \end{scope}
+  \ifthenelse{\k = 0}{
+    \tikzset{prop/.style={}}
+    \node [color=KULeuvenFaculteit, above=.4\yscale of mu3]   {\footnotesize micro $\mathcal{X}$};
+    \node [color=KULeuvenSecundair, below=.4\yscale of phi3]  {\footnotesize macro $\mathcal{Z}$};
+    \node [color=KULeuvenBlauw,     left=.4\yscale of prhobar2] {\footnotesize macro $\rho$};
+    \draw [->] (0,1.5\yscale) to node [above=.2em] {time} (3\intervalwidth,1.5\yscale);
+    \draw [->] (0,1.5\yscale) to node [left=.2em,above,rotate=90] {value} (0,7\yscale);
+    \node [anchor=south west] at (2.5\intervalwidth,2\yscale) {$k = \k$};
+  }
+} % end of foreach k
+\end{tikzpicture}
+%\end{document}
+}
+\end{center}
+}
