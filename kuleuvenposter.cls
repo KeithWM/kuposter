@@ -1122,7 +1122,7 @@
         \includegraphics[height=\baposter@xheight]{images/logo_KULeuven}
       };
       \draw ([xshift={-\baposter@xheight/2},yshift={-9*\baposter@xheight/10}]current page.north east) node[anchor=north east,inner sep=0] (facultyLogo) {
-        \includegraphics[height=\baposter@xheight]{images/paperplane} % paperplan should at some point be replaced by beeldmerk\baposter@Faculteit
+        \includegraphics[height=\baposter@xheight]{images/beeldmerk\baposter@Faculteit} % paperplan should at some point be replaced by beeldmerk\baposter@Faculteit
       };
       \ifthenelse{\equal{\baposter@titleBelow}{true}}{%
         \node (title) [text width=\paperwidth - 4\baposter@xmargin,inner sep=\baposter@xmargin, align=center,anchor=north,minimum height=\baposter@xheight,fill=white] at ([yshift={-19*\baposter@xheight/10}]current page.north) {\baposter@font\color{titleFontColor}#2};
