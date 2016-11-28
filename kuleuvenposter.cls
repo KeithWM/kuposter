@@ -771,7 +771,7 @@
 
 %% Define a macro that will fill the footer
 % #1 Personal images, #2 Personal text, #3 Association images, #4 Department name, #5 Department images
-\newcommand{\fillfooter}[5]{
+\newcommand{\fillfooter}[6]{
   \begin{minipage}[b][\footerheight][c]{.25\paperwidth}
 \baposter@font%
 #1%
@@ -785,24 +785,24 @@
   \begin{minipage}[b][\footerheight][c]{.245\paperwidth}
   \raggedleft
 \baposter@font%
-In association with:%
+#3%
   \end{minipage}%
   \hspace{.01\paperwidth}%
   \begin{minipage}[b][\footerheight][c]{.245\paperwidth}
   \raggedright
 \baposter@font%
-#3%
+#4%
   \end{minipage}%
   \begin{minipage}[b][\footerheight][c]{.25\paperwidth}
   \raggedleft%
   \begin{minipage}[b][\footerheight][c]{.15\paperwidth}
   \raggedleft%
 \baposter@font%
-#4
+#5
   \end{minipage}%
   \hspace{.01\paperwidth}%
 \baposter@font%
-#5
+#6
   \end{minipage}%
 }
 
@@ -825,7 +825,7 @@ In association with:%
 %%%                       Shape of the box-header region
 %%%   - Faculteit=<Naam van KULeuven Faculteit> speaks for itself (in Dutch)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newenvironment{poster}[8]{% #1 Options, #2 Title, #3 Authors, #4 Personal images, #5 Personal text, #6  Association images, #7 Department name, #8 Department images
+\newenvironment{poster}[9]{% #1 Options, #2 Title, #3 Authors, #4 Personal images, #5 Personal text, #6 Association text, #7 Association images, #8 Department name, #9 Department images
   \thispagestyle{empty}% Suppress Page Number
   \debug{Poster Starts}%
   % This setkeys call parses all provided options and depending on the option
@@ -1111,10 +1111,10 @@ In association with:%
   }% END of posterbox definition
 %
 
-  % #1 Options, #2 Title, #3 Authors, #4 Personal images, #5 Personal text, #6  Association images, #7 Department name, #8 Department images
+  % #1 Options, #2 Title, #3 Authors, #4 Personal images, #5 Personal text, #6 Association text, #7 Association images, #8 Department name, #9 Department images
   % (A possible subtitle can be added to either argument #2 or #3)
     \begin{tikzpicture}[remember picture ,overlay,outer sep=0pt]%
-      \node (footer) [fill=white,minimum width=\paperwidth,align=center,anchor=south,line width=0pt, inner sep=0\baposter@xmargin, minimum height=9\baposter@xheight/10-0\baposter@xmargin] at (current page.south) {\fillfooter{#4}{#5}{#6}{#7}{#8}};
+      \node (footer) [fill=white,minimum width=\paperwidth,align=center,anchor=south,line width=0pt, inner sep=0\baposter@xmargin, minimum height=9\baposter@xheight/10-0\baposter@xmargin] at (current page.south) {\fillfooter{#4}{#5}{#6}{#7}{#8}{#9}};
       \fill[KULeuvenFaculteit] ([xshift=-2cm]footer.north west) rectangle ([xshift=2cm,yshift={-9*\baposter@xheight/10}]current page.north east); % goes a little beyong the page on left and right, forp rinting purposes
       \draw ([xshift={\baposter@xheight/2},yshift={-\baposter@xheight/2}]current page.north west) node[anchor=north west,inner sep=0] (KULeuvenLogo) {
         \includegraphics[height=\baposter@xheight]{images/logo_KULeuven}

@@ -1,5 +1,5 @@
-%\documentclass[portrait,a0paper,fontscale=0.45]{kuleuvenposter}
-\documentclass[landscape,a1paper,fontscale=0.45]{kuleuvenposter}
+\documentclass[portrait,a1paper,fontscale=0.45]{kuleuvenposter}
+%\documentclass[landscape,a1paper,fontscale=0.45]{kuleuvenposter}
 %,paperheight=24in,paperwidth=36in%
 %,fontscale=0.467
 \usepackage{color}
@@ -59,7 +59,7 @@ macrocopy/.style={KULeuvenLichtblauw,-,shorten >=2pt,shorten <=2pt,line width=.8
 %\setlength{\parskip}{0pt}
 \begin{document}
 
-\begin{poster}{Faculteit=Ingenieurswetenschappen} 
+\begin{poster}{columns=4,Faculteit=Ingenieurswetenschappen} 
 { % the formatting is done here, as the desired font size will depend on the title length
 \spaceskip=1\fontdimen2\font plus 1\fontdimen3\font minus \fontdimen4\font % Make larger spaced in the title 
   \Huge\bfseries Parareal computation of SDEs with time-scale separation
@@ -68,14 +68,17 @@ macrocopy/.style={KULeuvenLichtblauw,-,shorten >=2pt,shorten <=2pt,line width=.8
   Fr\'ed\'eric Legoll\textsuperscript{1},Tony Leli\`evre\textsuperscript{1}, \underline{Keith Myerscough}\textsuperscript{2} and Giovanni Samaey\textsuperscript{2}\\
   {\footnotesize \textsuperscript{1}Ecole des Ponts ParisTech, \textsuperscript{2}KU Leuven}}
 { % Personal images (photo/QR code to website
-  \includegraphics[width=\footerheight]{images/qrcode}%
-  \includegraphics[width=\footerheight]{images/photo.jpg}
+  \includegraphics[width=\footerheight]{specific/qrcode}%
+  \includegraphics[width=\footerheight]{specific/photo.jpg}
 }
 { % Personal details
   Keith Myerscough\\{\texttt keith.myerscough@kuleuven.be}\\people.cs.kuleuven.be/\~{}keith.myerscough/
 }
+{% Text to state association
+In association with:%
+}
 {% Logo's of associated institutes/universities/companies/funding etc.
-  \includegraphics[height=.8\footerheight]{images/logo_EcolePonts} % 
+  \includegraphics[height=.8\footerheight]{specific/logo_EcolePonts} % 
 }
 { % Department name
   Department of Computer Science%
