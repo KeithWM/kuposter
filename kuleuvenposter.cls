@@ -269,6 +269,8 @@
 \else
   \setlength{\baposter@xheight}{0.0356\baposter@finalpaperwidth} % 30 mm can be interpreted as a maximum size in the house style, even if not explicitly stated
 \fi
+\setlength{\baposter@xheight}{0.0356\baposter@finalpaperheight} % 30 mm can be interpreted as a maximum size in the house style, even if not explicitly stated
+%\setlength{\baposter@xheight}{30mm} % 30 mm can be interpreted as a maximum size in the house style, even if not explicitly stated
 \typeout{xheight: \the\baposter@xheight}
 
 % Margin
@@ -515,8 +517,8 @@
   % Colours
   bgColorOne=baposter@silver,
   bgColorTwo=green,
-  titleFontColor=white,
-  titleBelow=false,
+  titleFontColor=black,
+  titleBelow=true,
   %
   font=\sffamily,
   background=shadeLR,
