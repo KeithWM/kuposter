@@ -564,6 +564,7 @@
 \definecolor{KULeuvenSecundair}{cmyk}{.65,.00,.00,.35}
 \definecolor{KULeuvenWetenschappen}{cmyk}{.42,.02,1.00,.00}
 \definecolor{KULeuvenIngenieurswetenschappen}{cmyk}{.00,.70,1.00,.00}
+\definecolor{KULeuvenBioingenieurswetenschappen}{cmyk}{0.40,.00,1.00,.38}
 \definecolor{KULeuvenRechtsgeleerdheid}{cmyk}{.00,1.00,.65,.18}
 %\definecolor{KULeuvenFaculteit}{RGB}{243,112,34} % a slightly off colour to match the paper aeroplane image...
 %\definecolor{KULeuvenFaculteit}{cmyk}{0,0.54,.86,.05} % a slightly off colour to match the paper aeroplane image...
@@ -787,13 +788,13 @@
   \begin{minipage}[b][\footerheight][c]{.245\paperwidth}
   \raggedleft
 \baposter@font%
-#3%
+~#3%
   \end{minipage}%
   \hspace{.01\paperwidth}%
   \begin{minipage}[b][\footerheight][c]{.245\paperwidth}
   \raggedright
 \baposter@font%
-#4%
+#4~%
   \end{minipage}%
   \begin{minipage}[b][\footerheight][c]{.25\paperwidth}
   \raggedleft%
